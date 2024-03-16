@@ -1,5 +1,17 @@
 const pessoasController = require('../controllers/pessoasController');
 
+const cadastrarPessoas = async (req, res) => {
+    res.render('novo', { title: ' - Cadastrar Pessoa' });
+}
+
+const cadastrarPessoa = async (req, res) => {
+    const pessoa = {
+        nome: req.body.nome,
+        idade: req.body.idade,
+    };
+    return pessoasController.criarPessoa(pessoa);
+}
+
 const listarPessoas = async (req, res) => {
     const pessoas = await pessoasController.listarPessoas();
     res.render('index', { title: ' - Listar Pessoas', pessoas });
@@ -22,5 +34,7 @@ const atualizarPessoa = async (req, res) => {
 module.exports = {
     listarPessoas,
     listarPessoa,
-    atualizarPessoa
+    atualizarPessoa,
+    cadastrarPessoa,
+    cadastrarPessoas
 }

@@ -10,10 +10,17 @@ const pessoasService = require('../services/pessoasService');
 const router = express.Router();
 
 // Definir rotas
+
+// --- Rotas Render
 router.get('/', pessoasService.listarPessoas);
+router.get('/novo', pessoasService.cadastrarPessoas);
+
+// --- Rotas API
+router.post('/novo', pessoasService.cadastrarPessoa);
+router.post('/update', pessoasService.atualizarPessoa);
+
 
 router.get('/:id', pessoasController.obterPessoa);
-router.post('/', pessoasController.criarPessoa);
 router.put('/:id', pessoasController.atualizarPessoa);
 router.delete('/:id', pessoasController.deletarPessoa);
 router.get('/:id/carros', pessoasController.obterCarrosDaPessoa);

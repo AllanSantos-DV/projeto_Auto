@@ -15,5 +15,6 @@ app.set('view engine', 'handlebars');
 // Configurar rotas
 app.use('/pessoas', pessoasRoutes);
 app.use('/carros', carrosRoutes);
+app.use(express.static('public'));
 
 module.exports = app;

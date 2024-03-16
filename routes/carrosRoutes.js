@@ -10,11 +10,13 @@ const upload = carrosController.upload;
 const router = express.Router();
 
 // Definir rotas
+/*
 router.get('/', carrosController.listarCarros);
 router.get('/:id', carrosController.obterCarro);
 router.post('/', upload.single('foto'), carrosController.criarCarro);
 router.put('/:id', upload.single('foto'), carrosController.atualizarCarro);
 router.delete('/:id', carrosController.deletarCarro);
 router.get('/:id/pessoa', carrosController.obterPessoaDoCarro);
+*/
 
 module.exports = router;
