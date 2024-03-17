@@ -48,6 +48,18 @@ const obterPessoaDoCarro = async (id) => {
     return await Carro.findByPk(id, { include: ['pessoa'] });
 };
 
+const desassociarCarro = async (carrosIds) => {
+    return await Carro.update({ pessoaId : null }, {
+        where: { id: carrosIds }
+    });
+};
+
+const associarCarro = async (pessoaId, carrosIds) => {
+    return await Carro.update({ pessoaId }, {
+        where: { id: carrosIds }
+    });
+}
+
 module.exports = {
     listarCarros,
     listarCarrosNaoAssociados,
@@ -56,5 +68,7 @@ module.exports = {
     atualizarCarro,
     deletarCarro,
     obterPessoaDoCarro,
+    desassociarCarro,
+    associarCarro,
     upload
 };

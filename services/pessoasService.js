@@ -1,11 +1,13 @@
 const pessoasController = require('../controllers/pessoasController');
 const carrosController = require('../controllers/carrosController');
-const carrosService = require('../services/carrosService');
+
+const carrosDisponiveisJson = async () => {
+    carros = await carrosController.listarCarrosNaoAssociados();
+    return carros.map(carro => carro.toJSON());
+}
 
 const cadastrarPessoas = async (req, res) => {
-    const carros = await carrosController.listarCarrosNaoAssociados();
-    const carrosJson = carros.map(carro => carro.toJSON());
-    res.render('newPessoa', { title: ' - Cadastrar Pessoa', carros: carrosJson });
+    res.render('newPessoa', { title: ' - Cadastrar Pessoa', carros : await carrosDisponiveisJson()});
 }
 
 const cadastrarPessoa = async (req, res) => {
@@ -22,8 +24,12 @@ const cadastrarPessoa = async (req, res) => {
 
 const listarPessoas = async (req, res) => {
     const pessoas = await pessoasController.listarPessoas();
-    const pessoasJson = pessoas.map(pessoa => pessoa.toJSON());
-    res.render('index', { title: ' - Listar Pessoas', pessoas: pessoasJson });
+    const pessoasJson = await Promise.all(pessoas.map(async pessoa => {
+        const pessoaJson = pessoa.toJSON();
+        pessoaJson.carrosDisponiveis = await carrosDisponiveisJson();
+        return pessoaJson;
+    }));
+    res.render('index', { title: ' - Listar Pessoas', pessoas: pessoasJson});
 }
 
 const listarPessoa = async (req, res) => {
@@ -35,6 +41,7 @@ const atualizarPessoa = async (req, res) => {
     const dataAtualizada = {
         nome: req.body.nome,
         idade: req.body.idade,
+        carros: req.body.carros
     };
     return pessoasController.atualizarPessoa({ params: { id: req.params.id }, body: dataAtualizada }).then(() => res.redirect('/pessoas'));
 };

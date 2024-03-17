@@ -20,6 +20,8 @@ router.get('/novo', carrosService.cadastrarCarros);
 
 // --- Rotas API
 router.post('/novo', carrosService.cadastrarCarro);
+router.post('/dessasociarCarro/:id', carrosService.desassociarCarro);
+router.post('/associarCarro/:id', carrosService.associarCarro);
 
 //router.post('/update/:id', carrosController.atualizarCarro);
 //router.post('/delete/:id', carrosController.deletarCarro);

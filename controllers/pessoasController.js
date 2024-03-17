@@ -15,8 +15,16 @@ const criarPessoa = async (pessoa) => {
 };
 
 const atualizarPessoa = async (req) => {
+    const id = req.params.id;
+    dessasociarCarro(id);
     return await Pessoa.update(req.body, {
-        where: { id: req.params.id }
+        where: { id }
+    });
+};
+
+const dessasociarCarro = async (id) => {
+    return await Pessoa.update({ carroId: null }, {
+        where: { id }
     });
 };
 

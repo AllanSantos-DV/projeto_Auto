@@ -44,6 +44,17 @@ const deletarCarro = async (req, res) => {
     return carrosController.deletarCarro(req.params.id).then(() => res.redirect('/carros'));
 };
 
+const desassociarCarro = async (req, res) => {
+    const carrosIds = req.body.carros;
+    return carrosController.desassociarCarro(carrosIds).then(() => res.redirect('/pessoas'));
+}
+
+const associarCarro = async (req, res) => {
+    const pessoaId = req.params.id;
+    const carrosIds = req.body.carros;
+    return carrosController.associarCarro(pessoaId, carrosIds).then(() => res.redirect('/pessoas'));
+}
+
 module.exports = {
     listarCarros,
     listarCarro,
@@ -51,5 +62,7 @@ module.exports = {
     atualizarCarro,
     cadastrarCarro,
     cadastrarCarros,
-    deletarCarro
+    deletarCarro,
+    desassociarCarro,
+    associarCarro
 }
