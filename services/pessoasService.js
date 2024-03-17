@@ -1,7 +1,11 @@
 const pessoasController = require('../controllers/pessoasController');
+const carrosController = require('../controllers/carrosController');
+const carrosService = require('../services/carrosService');
 
 const cadastrarPessoas = async (req, res) => {
-    res.render('novo', { title: ' - Cadastrar Pessoa' });
+    const carros = await carrosController.listarCarrosNaoAssociados();
+    const carrosJson = carros.map(carro => carro.toJSON());
+    res.render('newPessoa', { title: ' - Cadastrar Pessoa', carros: carrosJson });
 }
 
 const cadastrarPessoa = async (req, res) => {
@@ -9,8 +13,11 @@ const cadastrarPessoa = async (req, res) => {
         nome: req.body.nome,
         idade: req.body.idade,
     };
-
-    return pessoasController.criarPessoa(pessoa).then(() => res.redirect('/pessoas'));
+    const novaPessoa = await pessoasController.criarPessoa(pessoa);
+    if (req.body.carros) {
+        novaPessoa.setCarros(req.body.carros);
+    }
+    res.redirect('/pessoas');
 }
 
 const listarPessoas = async (req, res) => {
@@ -32,6 +39,10 @@ const atualizarPessoa = async (req, res) => {
     return pessoasController.atualizarPessoa({ params: { id: req.params.id }, body: dataAtualizada }).then(() => res.redirect('/pessoas'));
 };
 
+const obterCarrosDaPessoa = async (req) => {
+    return await pessoasController.obterCarrosDaPessoa(req);
+}
+
 const deletarPessoa = async (req, res) => {
     return pessoasController.deletarPessoa(req.params.id).then(() => res.redirect('/pessoas'));
 };
@@ -42,5 +53,6 @@ module.exports = {
     atualizarPessoa,
     cadastrarPessoa,
     cadastrarPessoas,
+    obterCarrosDaPessoa,
     deletarPessoa
 }

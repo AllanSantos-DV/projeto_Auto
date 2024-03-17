@@ -1,7 +1,9 @@
 const Pessoa = require('../database/models/pessoas');
 
 const listarPessoas = async () => {
-    return await Pessoa.findAll();
+    return await Pessoa.findAll({
+        include: 'carros'
+    });
 };
 
 const obterPessoa = async (req) => {
@@ -24,8 +26,8 @@ const deletarPessoa = async (id) => {
     });
 };
 
-const obterCarrosDaPessoa = async (req) => {
-    return await Pessoa.findByPk(req.params.id, { include: ['carros'] });
+const obterCarrosDaPessoa = async (id) => {
+    return await Pessoa.findByPk(id, { include: ['carros'] });
 };
 
 module.exports = {

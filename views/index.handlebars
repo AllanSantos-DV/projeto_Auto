@@ -30,8 +30,8 @@
                 <td>{{this.idade}}</td>
                 <td class="col-5">
                     {{#if this.carros}}
-                    <select class="form-select me-2" onchange="window.location.href=this.value">
-                        <option selected>Selecione um veiculo</option>
+                    <select class="form-select me-2" onchange="redirecionar(this)">
+                        <option selected value="/pessoas">Lista de Veiculos</option>
                         {{#each this.carros}}
                         <option value="/carros/{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
                         {{/each}}
@@ -102,5 +102,12 @@
             myModal.hide();
             location.reload();
         });
+    }
+
+
+    function redirecionar(select) {
+        const url = select.value;
+        select.value = "/pessoas";
+        window.location.href = url;
     }
 </script>

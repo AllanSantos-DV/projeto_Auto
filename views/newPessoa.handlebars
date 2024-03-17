@@ -1,0 +1,31 @@
+<div class="text-center mt-4">
+    <h1>Cadastrar nova Pessoa</h1>
+</div>
+
+<div class="d-flex justify-content-center">
+    <form action="/pessoas/novo" method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome">
+        </div>
+        <div class="mb-3">
+            <label for="idade" class="form-label">Idade</label>
+            <input type="number" class="form-control" id="idade" name="idade">
+        </div>
+        {{#if carros}}
+        <div class="mb-3">
+            <label for="carro" class="form-label">Veiculos Disponiveis</label>
+            <select class="form-select me-2" name="carros[]" multiple>
+                {{#each carros}}
+                <option value="{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
+                {{/each}}
+            </select>
+
+        </div>
+        {{/if}}
+        <div class="d-flex">
+            <button type="submit" class="btn btn-primary me-2">Cadastrar</button>
+            <a href="/pessoas" class="btn btn-danger">Cancelar</a>
+        </div>
+    </form>
+</div>
