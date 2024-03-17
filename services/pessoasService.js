@@ -29,8 +29,7 @@ const atualizarPessoa = async (req, res) => {
         nome: req.body.nome,
         idade: req.body.idade,
     };
-
-    return pessoasController.atualizarPessoa({ params: { id: req.params.id }, body: dataAtualizada });
+    return pessoasController.atualizarPessoa({ params: { id: req.params.id }, body: dataAtualizada }).then(() => res.redirect('/pessoas'));
 };
 
 const deletarPessoa = async (req, res) => {

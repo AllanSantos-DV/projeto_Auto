@@ -17,7 +17,7 @@ router.get('/novo', pessoasService.cadastrarPessoas);
 
 // --- Rotas API
 router.post('/novo', pessoasService.cadastrarPessoa);
-router.post('/update', pessoasService.atualizarPessoa);
+router.post('/update/:id', pessoasService.atualizarPessoa);
 router.post('/delete/:id', pessoasService.deletarPessoa);
 
 
