@@ -69,28 +69,31 @@
                                     <input type="number" class="form-control" id="idade{{this.id}}"
                                         value="{{this.idade}}">
                                 </div>
-                                {{#if this.carros}}
+                                {{#if this.carrosDisponiveis}}
                                 <div class="mb-3 text-center">
-                                    <label for="carros{{this.id}}" class="form-label">
-                                        <h5>Selecione Carros para remover</h5>
-                                    </label><br>
-                                    <label class="small text-muted">(Segure CTRL para marcar multiplos ou
-                                        desmarcar)</label>
-                                    <select class="form-select me-2" name="carros{{this.id}}" multiple>
-                                        {{#each carros}}
+                                    <label for="carrosDisponiveis{{this.id}}" class="form-label">
+                                        <h5 style="margin-bottom: 0;">Selecione Carros para adicionar</h5>
+                                        <span class="small text-muted">(Segure CTRL para marcar multiplos ou
+                                            desmarcar)</span>
+                                    </label>
+                                    <select class="form-select me-2" name="carrosDisponiveis{{this.id}}" multiple
+                                        style="background-color: lightgreen;">
+                                        {{#each carrosDisponiveis}}
                                         <option value="{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
                                 {{/if}}
-                                {{#if this.carrosDisponiveis}}
+                                {{#if this.carros}}
                                 <div class="mb-3 text-center">
-                                    <label for="carrosDisponiveis{{this.id}}" class="form-label">
-                                        <h5>Selecione Carros para adicionar</h5>
-                                    </label><br>
-                                    <label class="small text-muted">(Segure CTRL para marcar múltiplos)</label>
-                                    <select class="form-select me-2" name="carrosDisponiveis{{this.id}}" multiple>
-                                        {{#each carrosDisponiveis}}
+                                    <label for="carros{{this.id}}" class="form-label">
+                                        <h5 style="margin-bottom: 0;">Selecione Carros para remover</h5>
+                                        <span class="small text-muted">(Segure CTRL para marcar multiplos ou
+                                            desmarcar)</span>
+                                    </label>
+                                    <select class="form-select me-2" name="carros{{this.id}}" multiple
+                                        style="background-color: lightcoral;">
+                                        {{#each carros}}
                                         <option value="{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
                                         {{/each}}
                                     </select>
@@ -110,66 +113,3 @@
         </tbody>
     </table>
 </div>
-
-<script>
-
-    function salvarMudancas(id) {
-        if (id === null) return;
-        var nome = document.getElementById('nome' + id).value;
-        var idade = document.getElementById('idade' + id).value;
-        var selectCarros = document.querySelector(`select[name="carros${id}"]`);
-        var carrosParaRemover = selectCarros ? Array.from(selectCarros.selectedOptions).map(option => option.value) : [];
-
-        var selectCarrosDisponiveis = document.querySelector(`select[name="carrosDisponiveis${id}"]`);
-        var carrosParaAdicionar = selectCarrosDisponiveis ? Array.from(selectCarrosDisponiveis.selectedOptions).map(option => option.value) : [];
-
-
-        var data = { nome: nome, idade: idade };
-
-        fetch('/pessoas/update/' + id, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            if (carrosParaRemover.length > 0) {
-                dessasociarCarro(id, carrosParaRemover);
-            }
-            if (carrosParaAdicionar.length > 0) {
-                associarCarro(id, carrosParaAdicionar);
-            }
-
-            var myModal = new bootstrap.Modal(document.getElementById('editModal' + id));
-            myModal.hide();
-            location.reload();
-        });
-    }
-
-    function dessasociarCarro(id, carros) {
-        fetch('/carros/dessasociarCarro/' + id, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ carros: carros })
-        });
-    }
-
-    function associarCarro(id, carros) {
-        fetch('/carros/associarCarro/' + id, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ carros: carros })
-        });
-    }
-
-    function redirecionar(select) {
-        if (select === null) return;
-        const url = select.value;
-        select.value = "/pessoas";
-        window.location.href = url;
-    }
-</script>
