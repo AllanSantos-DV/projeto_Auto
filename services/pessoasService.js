@@ -9,12 +9,14 @@ const cadastrarPessoa = async (req, res) => {
         nome: req.body.nome,
         idade: req.body.idade,
     };
-    return pessoasController.criarPessoa(pessoa);
+
+    return pessoasController.criarPessoa(pessoa).then(() => res.redirect('/pessoas'));
 }
 
 const listarPessoas = async (req, res) => {
     const pessoas = await pessoasController.listarPessoas();
-    res.render('index', { title: ' - Listar Pessoas', pessoas });
+    const pessoasJson = pessoas.map(pessoa => pessoa.toJSON());
+    res.render('index', { title: ' - Listar Pessoas', pessoas: pessoasJson });
 }
 
 const listarPessoa = async (req, res) => {
@@ -31,10 +33,15 @@ const atualizarPessoa = async (req, res) => {
     return pessoasController.atualizarPessoa({ params: { id: req.params.id }, body: dataAtualizada });
 };
 
+const deletarPessoa = async (req, res) => {
+    return pessoasController.deletarPessoa(req.params.id).then(() => res.redirect('/pessoas'));
+};
+
 module.exports = {
     listarPessoas,
     listarPessoa,
     atualizarPessoa,
     cadastrarPessoa,
-    cadastrarPessoas
+    cadastrarPessoas,
+    deletarPessoa
 }

@@ -12,6 +12,10 @@ const app = express();
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+// Configurar middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Configurar rotas
 app.use('/pessoas', pessoasRoutes);
 app.use('/carros', carrosRoutes);

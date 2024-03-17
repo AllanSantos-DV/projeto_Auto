@@ -8,8 +8,8 @@ const obterPessoa = async (req) => {
     return await Pessoa.findByPk(req.params.id);
 };
 
-const criarPessoa = async (req) => {
-    return await Pessoa.create(req.body);
+const criarPessoa = async (pessoa) => {
+    return await Pessoa.create(pessoa);
 };
 
 const atualizarPessoa = async (req) => {
@@ -18,9 +18,9 @@ const atualizarPessoa = async (req) => {
     });
 };
 
-const deletarPessoa = async (req) => {
+const deletarPessoa = async (id) => {
     return await Pessoa.destroy({
-        where: { id: req.params.id }
+        where: { id }
     });
 };
 

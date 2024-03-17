@@ -18,11 +18,11 @@ router.get('/novo', pessoasService.cadastrarPessoas);
 // --- Rotas API
 router.post('/novo', pessoasService.cadastrarPessoa);
 router.post('/update', pessoasService.atualizarPessoa);
+router.post('/delete/:id', pessoasService.deletarPessoa);
 
 
 router.get('/:id', pessoasController.obterPessoa);
 router.put('/:id', pessoasController.atualizarPessoa);
-router.delete('/:id', pessoasController.deletarPessoa);
 router.get('/:id/carros', pessoasController.obterCarrosDaPessoa);
 
 module.exports = router;

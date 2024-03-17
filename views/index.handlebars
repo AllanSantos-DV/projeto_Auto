@@ -4,20 +4,32 @@
     </div>
 
     <div class="d-flex justify-content-center mb-3">
-        <button type="button" class="btn btn-primary me-2" onclick="window.location.href='/pessoas/novo'">Cadastrar pessoas</button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/carros/novo'">Cadastrar carros</button>
+        <button type="button" class="btn btn-primary me-2" onclick="window.location.href='/pessoas/novo'">Cadastrar
+            pessoas</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/carros/novo'">Cadastrar
+            carros</button>
     </div>
 </div>
 
 <div class="card" style="width: 100%; overflow-x: auto;">
-    <ul class="list-group list-group-flush">
-        {{#each pessoas}}
-        <li class="list-group-item">
-            <div class="d-flex align-items-center">
-                <div class="me-auto">
-                    <p class="mb-0">Id: {{this.id}} Nome: {{this.nome}} Idade: {{this.idade}}</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Idade</th>
+                <th scope="col">Carros</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each pessoas}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.nome}}</td>
+                <td>{{this.idade}}</td>
+                <td class="col-5">
                     {{#if this.carros}}
-                    <p>Carros:</p>
                     <select class="form-select me-2" onchange="window.location.href=this.value">
                         <option selected>Selecione um veiculo</option>
                         {{#each this.carros}}
@@ -25,66 +37,74 @@
                         {{/each}}
                     </select>
                     {{/if}}
-                </div>
-                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal{{this.id}}">Editar</button>
-                <form action="/pessoas/delete/{{this.id}}" method="post">
-                    <button type="submit" class="btn btn-danger">Deletar</button>
-                </form>
-            </div>
-        </li>
-
-        <!-- Modal -->
-        <div class="modal fade" id="editModal{{this.id}}" tabindex="-1" aria-labelledby="editModalLabel{{this.id}}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel{{this.id}}">Editar Pessoa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editForm{{this.id}}">
-                            <div class="mb-3">
-                                <label for="nome{{this.id}}" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="nome{{this.id}}" value="{{this.nome}}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="idade{{this.id}}" class="form-label">Idade</label>
-                                <input type="number" class="form-control" id="idade{{this.id}}" value="{{this.idade}}">
-                            </div>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                            data-bs-target="#editModal{{this.id}}">Editar</button>
+                        <form action="/pessoas/delete/{{this.id}}" method="post">
+                            <button type="submit" class="btn btn-danger">Deletar</button>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" onclick="salvarMudancas({{this.id}})">Salvar mudanças</button>
+                </td>
+            </tr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="editModal{{this.id}}" tabindex="-1" aria-labelledby="editModalLabel{{this.id}}"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel{{this.id}}">Editar Pessoa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm{{this.id}}">
+                                <div class="mb-3">
+                                    <label for="nome{{this.id}}" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="nome{{this.id}}" value="{{this.nome}}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="idade{{this.id}}" class="form-label">Idade</label>
+                                    <input type="number" class="form-control" id="idade{{this.id}}"
+                                        value="{{this.idade}}">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-primary" onclick="salvarMudancas({{this.id}})">Salvar
+                                mudanças</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {{/each}}
-    </ul>
+            {{/each}}
+        </tbody>
+    </table>
 </div>
 
 <script>
-function salvarMudancas(id) {
-    var nome = document.getElementById('nome' + id).value;
-    var idade = document.getElementById('idade' + id).value;
+    function salvarMudancas(id) {
+        var nome = document.getElementById('nome' + id).value;
+        var idade = document.getElementById('idade' + id).value;
 
-    var data = { nome: nome, idade: idade };
+        var data = { nome: nome, idade: idade };
 
-    fetch('/pessoas/update/' + id, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Sucesso:', data);
-        location.reload();
-    })
-    .catch((error) => {
-        console.error('Erro:', error);
-    });
-}
+        fetch('/pessoas/update/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Sucesso:', data);
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+            });
+    }
 </script>
