@@ -5,15 +5,20 @@ const cadastrarCarros = async (req, res) => {
 }
 
 const cadastrarCarro = async (req, res) => {
+    let fotoLink = null;
+    if (req.file) {
+        fotoLink = req.file.path.replace('public\\', '');
+    }
     const carro = {
         modelo: req.body.modelo,
         marca: req.body.marca,
         ano: req.body.ano,
         preco: req.body.preco,
-        fotoLink: req.file ? req.file.path : null
+        fotoLink: fotoLink
     };
-    return carrosController.criarCarro(carro).then(() => res.redirect('/pessoas'));
+    return carrosController.criarCarro(carro).then(() => res.redirect('/carros'));
 }
+
 
 const listarCarros = async (req, res) => {
     const carros = await carrosController.listarCarros();
