@@ -33,7 +33,8 @@
                     <select class="form-select me-2" onchange="redirecionar(this)">
                         <option selected value="/pessoas">Lista de Veiculos</option>
                         {{#each this.carros}}
-                        <option value="/carros/{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
+                        <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
+                            this.fotoLink}} - Possui foto {{/if}} </option>
                         {{/each}}
                     </select>
                     {{/if}}
@@ -79,7 +80,8 @@
                                     <select class="form-select me-2" name="carrosDisponiveis{{this.id}}" multiple
                                         style="background-color: lightgreen;">
                                         {{#each carrosDisponiveis}}
-                                        <option value="{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
+                                        <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
+                                            this.fotoLink}} - Possui foto {{/if}} </option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -94,7 +96,8 @@
                                     <select class="form-select me-2" name="carros{{this.id}}" multiple
                                         style="background-color: lightcoral;">
                                         {{#each carros}}
-                                        <option value="{{this.id}}">{{this.modelo}} - {{this.marca}}</option>
+                                        <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
+                                            this.fotoLink}} - Possui foto {{/if}} </option>
                                         {{/each}}
                                     </select>
                                 </div>

@@ -6,11 +6,11 @@
     <form action="/pessoas/novo" method="post">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" name="nome">
+            <input type="text" class="form-control" id="nome" name="nome" required>
         </div>
         <div class="mb-3">
             <label for="idade" class="form-label">Idade</label>
-            <input type="number" class="form-control" id="idade" name="idade">
+            <input type="number" class="form-control" id="idade" name="idade" required>
         </div>
         {{#if carros}}
         <div class="mb-3">

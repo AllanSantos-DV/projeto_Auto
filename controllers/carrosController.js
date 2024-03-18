@@ -1,18 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-const multer = require('multer');
 const Carro = require('../database/models/carros');
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './imagens/carro/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, `${req.params.id}.jpg`);
-    }
-});
-
-const upload = multer({ storage: storage });
 
 const listarCarros = async () => {
     return await Carro.findAll();
@@ -69,6 +55,5 @@ module.exports = {
     deletarCarro,
     obterPessoaDoCarro,
     desassociarCarro,
-    associarCarro,
-    upload
+    associarCarro
 };

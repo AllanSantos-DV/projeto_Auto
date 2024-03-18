@@ -9,9 +9,9 @@ const cadastrarCarro = async (req, res) => {
         modelo: req.body.modelo,
         marca: req.body.marca,
         ano: req.body.ano,
-        preco: req.body.preco
+        preco: req.body.preco,
+        fotoLink: req.file ? req.file.path : null
     };
-
     return carrosController.criarCarro(carro).then(() => res.redirect('/pessoas'));
 }
 

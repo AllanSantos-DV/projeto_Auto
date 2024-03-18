@@ -3,22 +3,26 @@
 </div>
 
 <div class="d-flex justify-content-center">
-    <form action="/carros/novo" method="post">
+    <form action="/carros/novo" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="modelo" class="form-label">Modelo</label>
-            <input type="text" class="form-control" id="modelo" name="modelo">
+            <input type="text" class="form-control" id="modelo" name="modelo" required>
         </div>
         <div class="mb-3">
             <label for="marca" class="form-label">Marca</label>
-            <input type="text" class="form-control" id="marca" name="marca">
+            <input type="text" class="form-control" id="marca" name="marca" required>
         </div>
         <div class="mb-3">
             <label for="ano" class="form-label">Ano</label>
-            <input type="text" class="form-control" id="ano" name="ano">
+            <input type="text" class="form-control" id="ano" name="ano" required>
         </div>
         <div class="mb-3">
             <label for="preco" class="form-label">Preço</label>
-            <input type="text" class="form-control" id="preco" name="preco">
+            <input type="text" class="form-control" id="preco" name="preco" required>
+        </div>
+        <div class="mb-3">
+            <label for="fotoLink" class="form-label">Imagem</label>
+            <input type="file" class="form-control" id="fotoLink" name="fotoLink" accept=".jpeg, .jpg">
         </div>
         <div class="d-flex">
             <button type="submit" class="btn btn-primary me-2">Cadastrar</button>

@@ -1,4 +1,19 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const uuid = require('uuid');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/imagens/carro/');
+    },
+    filename: function(req, file, cb) {
+        let ext = path.extname(file.originalname);
+        cb(null, uuid.v4() + ext);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Importar controladores
 const carrosController = require('../controllers/carrosController');
@@ -6,8 +21,6 @@ const carrosController = require('../controllers/carrosController');
 // Importar services
 const carrosService = require('../services/carrosService');
 
-// Importar upload
-const upload = carrosController.upload;
 
 // Criar roteador
 const router = express.Router();
@@ -19,7 +32,7 @@ router.get('/', carrosService.listarCarros);
 router.get('/novo', carrosService.cadastrarCarros);
 
 // --- Rotas API
-router.post('/novo', carrosService.cadastrarCarro);
+router.post('/novo', upload.single('fotoLink'), carrosService.cadastrarCarro);
 router.post('/dessasociarCarro/:id', carrosService.desassociarCarro);
 router.post('/associarCarro/:id', carrosService.associarCarro);
 
