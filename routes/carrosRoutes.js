@@ -15,9 +15,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Importar controladores
-const carrosController = require('../controllers/carrosController');
-
 // Importar services
 const carrosService = require('../services/carrosService');
 
@@ -35,9 +32,5 @@ router.get('/novo', carrosService.cadastrarCarros);
 router.post('/novo', upload.single('fotoLink'), carrosService.cadastrarCarro);
 router.post('/dessasociarCarro/:id', carrosService.desassociarCarro);
 router.post('/associarCarro/:id', carrosService.associarCarro);
-
-//router.post('/update/:id', carrosController.atualizarCarro);
-//router.post('/delete/:id', carrosController.deletarCarro);
-//router.post('/upload/:id', upload.single('imagem'), carrosController.uploadImagem);
 
 module.exports = router;

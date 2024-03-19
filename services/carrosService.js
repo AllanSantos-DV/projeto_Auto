@@ -7,7 +7,7 @@ const cadastrarCarros = async (req, res) => {
 const cadastrarCarro = async (req, res) => {
     let fotoLink = null;
     if (req.file) {
-        fotoLink = req.file.path.replace('public\\', '');
+        fotoLink = req.file.path.replace('public/', '');
     }
     const carro = {
         modelo: req.body.modelo,
