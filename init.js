@@ -1,5 +1,5 @@
 // importando o arquivo de conexão com o banco de dados
-const db = require('./database/conect/db.js');
+const { db } = require('./database/conect/db.js');
 
 // importando os models
 require('./database/models/pessoas.js');

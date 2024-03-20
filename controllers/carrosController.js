@@ -1,5 +1,9 @@
 const Carro = require('../database/models/carros');
 
+const criarCarro = async (carro) => {
+    return await Carro.create(carro);
+};
+
 const listarCarros = async () => {
     return await Carro.findAll();
 };
@@ -8,14 +12,6 @@ const listarCarrosNaoAssociados = async () => {
     return await Carro.findAll({
         where: { pessoaId: null }
     });
-};
-
-const obterCarro = async (id) => {
-    return await Carro.findByPk(id);
-};
-
-const criarCarro = async (carro) => {
-    return await Carro.create(carro);
 };
 
 const atualizarCarro = async (req) => {
@@ -34,26 +30,25 @@ const obterPessoaDoCarro = async (id) => {
     return await Carro.findByPk(id, { include: ['pessoa'] });
 };
 
+const associarCarro = async (pessoaId, carrosIds) => {
+    return await Carro.update({ pessoaId }, {
+        where: { id: carrosIds }
+    });
+};
+
 const desassociarCarro = async (carrosIds) => {
     return await Carro.update({ pessoaId : null }, {
         where: { id: carrosIds }
     });
 };
 
-const associarCarro = async (pessoaId, carrosIds) => {
-    return await Carro.update({ pessoaId }, {
-        where: { id: carrosIds }
-    });
-}
-
 module.exports = {
+    criarCarro,
     listarCarros,
     listarCarrosNaoAssociados,
-    obterCarro,
-    criarCarro,
     atualizarCarro,
     deletarCarro,
     obterPessoaDoCarro,
-    desassociarCarro,
-    associarCarro
+    associarCarro,
+    desassociarCarro
 };

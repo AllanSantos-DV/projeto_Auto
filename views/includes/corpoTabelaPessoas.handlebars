@@ -1,0 +1,25 @@
+<tr class="text-center">
+    <td>{{this.id}}</td>
+    <td>{{this.nome}}</td>
+    <td>{{this.idade}}</td>
+    <td class="col-5">
+        {{#if this.carros}}
+        <select class="form-select me-2" onchange="redirecionar(this)">
+            <option selected value="/pessoas">Lista de Veiculos</option>
+            {{#each this.carros}}
+            <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
+                this.fotoLink}} - Possui foto {{/if}} </option>
+            {{/each}}
+        </select>
+        {{/if}}
+    </td>
+    <td class="align-items-center d-flex justify-content-center">
+        <div>
+            <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                data-bs-target="#editModal{{this.id}}">Editar</button>
+            <form action="/pessoas/delete/{{this.id}}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger">Deletar</button>
+            </form>
+        </div>
+    </td>
+</tr>

@@ -28,16 +28,14 @@ const router = express.Router();
 // Definir rotas
 
 // --- Rotas Render
-router.get('/', carrosService.listarCarros);
 router.get('/novo', carrosService.cadastrarCarros);
+router.get('/', carrosService.listarCarros);
 
 // --- Rotas API
 router.post('/novo', upload.single('fotoLink'), carrosService.cadastrarCarro);
-router.post('/dessasociarCarro/:id', carrosService.desassociarCarro);
+router.post('/update/:id', upload.single('fotoLink'), carrosService.atualizarCarro);
+router.post('/delete/:id', carrosService.deletarCarro);
 router.post('/associarCarro/:id', carrosService.associarCarro);
-
-//router.post('/update/:id', carrosController.atualizarCarro);
-//router.post('/delete/:id', carrosController.deletarCarro);
-//router.post('/upload/:id', upload.single('imagem'), carrosController.uploadImagem);
+router.post('/dessasociarCarro/:id', carrosService.desassociarCarro);
 
 module.exports = router;

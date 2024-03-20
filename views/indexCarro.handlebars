@@ -4,10 +4,10 @@
     </div>
 
     <div class="d-flex justify-content-center mb-3">
-        <button type="button" class="btn btn-primary me-2" onclick="window.location.href='/pessoas/novo'">Cadastrar
+        <button type="button" class="btn btn-primary me-2" onclick="window.location.href='/carros/novo'">Cadastrar
+            carro</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/pessoas'">Listar
             pessoas</button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/carros/novo'">Cadastrar
-            carros</button>
     </div>
 </div>
 
@@ -16,6 +16,7 @@
         height: 20cap;
         overflow: hidden;
     }
+
     .card-img-top {
         height: 20cap;
         object-fit: cover;
@@ -25,7 +26,8 @@
 <div class="row">
     {{#each carros}}
     <div class="col-sm-4 d-flex pb-4">
-        <div class="card flex-fill d-flex flex-column">
+        <div class="card flex-fill d-flex flex-column" style="cursor: pointer;" data-bs-toggle="modal"
+            data-bs-target="#editCarModal-{{this.id}}">
             <div class="card-img-container">
                 <img src="{{this.fotoLink}}" class="card-img-top" alt="{{this.modelo}} - {{this.marca}}">
             </div>
@@ -38,6 +40,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    {{> carrosModal}}
     {{/each}}
 </div>
-

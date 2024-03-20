@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const exphbs = require('express-handlebars');
 
 // Importar rotas
@@ -9,7 +10,10 @@ const carrosRoutes = require('./routes/carrosRoutes');
 const app = express();
 
 // Configurar aplicativo
-app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs.engine({
+    defaultLayout: 'main',
+    partialsDir: path.join(__dirname, '/views/includes/')
+}));
 app.set('view engine', 'handlebars');
 
 // Configurar middleware

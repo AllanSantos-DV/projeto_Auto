@@ -1,13 +1,12 @@
-const Sequelize = require('sequelize');
-const db = require('../conect/db.js');
+const { db, Seq } = require('../conect/db.js');
 
 const Pessoas = db.define('pessoas', {
     nome: {
-        type: Sequelize.STRING,
+        type: Seq.STRING,
         allowNull: false
     },
     idade: {
-        type: Sequelize.INTEGER,
+        type: Seq.INTEGER,
         allowNull: false
     }
 });

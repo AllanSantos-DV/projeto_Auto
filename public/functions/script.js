@@ -11,6 +11,11 @@ function salvarMudancas(id) {
 
     var data = { nome: nome, idade: idade };
 
+    atualizarPessoa(id, data, carrosParaAdicionar, carrosParaRemover);
+    
+};
+
+function atualizarPessoa(id, data, carrosParaAdicionar, carrosParaRemover) {
     fetch('/pessoas/update/' + id, {
         method: 'POST',
         headers: {
@@ -24,12 +29,14 @@ function salvarMudancas(id) {
         if (carrosParaAdicionar.length > 0) {
             associarCarro(id, carrosParaAdicionar);
         }
-
-        var myModal = new bootstrap.Modal(document.getElementById('editModal' + id));
-        myModal.hide();
-        location.reload();
+        fecharModal(id);
     });
-}
+};
+
+function fecharModal(id) {
+    var myModal = new bootstrap.Modal(document.getElementById('editModal' + id));
+    myModal.hide();
+};
 
 function dessasociarCarro(id, carros) {
     fetch('/carros/dessasociarCarro/' + id, {
@@ -41,7 +48,7 @@ function dessasociarCarro(id, carros) {
     }).then(() => {
         location.reload();
     });
-}
+};
 
 function associarCarro(id, carros) {
     fetch('/carros/associarCarro/' + id, {
@@ -53,11 +60,11 @@ function associarCarro(id, carros) {
     }).then(() => {
         location.reload();
     });
-}
+};
 
 function redirecionar(select) {
     if (select === null) return;
     const url = select.value;
     select.value = "/pessoas";
     window.location.href = url;
-}
+};

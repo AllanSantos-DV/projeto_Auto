@@ -1,0 +1,40 @@
+<div class="modal fade" id="editCarModal-{{this.id}}" tabindex="-1" aria-labelledby="editCarModalLabel-{{this.id}}"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCarModalLabel-{{this.id}}">Editar Carro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/carros/update/{{this.id}}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="modelo-{{this.id}}" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="modelo-{{this.id}}" value="{{this.modelo}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="marca-{{this.id}}" class="form-label">Marca</label>
+                        <input type="text" class="form-control" id="marca-{{this.id}}" value="{{this.marca}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ano-{{this.id}}" class="form-label
+                            ">Ano</label>
+                        <input type="number" class="form-control" id="ano-{{this.id}}" value="{{this.ano}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="preco-{{this.id}}" class="form-label">Preço</label>
+                        <input type="number" class="form-control" id="preco-{{this.id}}" value="{{this.preco}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fotoLink" class="form-label">Imagem</label>
+                        <input type="file" class="form-control" id="fotoLink" name="fotoLink" accept=".jpeg, .jpg">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

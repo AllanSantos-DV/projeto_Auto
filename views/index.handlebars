@@ -5,12 +5,13 @@
 
     <div class="d-flex justify-content-center mb-3">
         <button type="button" class="btn btn-primary me-2" onclick="window.location.href='/pessoas/novo'">Cadastrar
-            pessoas</button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/carros/novo'">Cadastrar
+            pessoa</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/carros'">Listar
             carros</button>
     </div>
 </div>
 
+{{#if pessoas}}
 <div class="card" style="width: 100%; overflow-x: auto;">
     <table class="table">
         <thead>
@@ -24,95 +25,12 @@
         </thead>
         <tbody>
             {{#each pessoas}}
-            <tr class="text-center">
-                <td>{{this.id}}</td>
-                <td>{{this.nome}}</td>
-                <td>{{this.idade}}</td>
-                <td class="col-5">
-                    {{#if this.carros}}
-                    <select class="form-select me-2" onchange="redirecionar(this)">
-                        <option selected value="/pessoas">Lista de Veiculos</option>
-                        {{#each this.carros}}
-                        <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
-                            this.fotoLink}} - Possui foto {{/if}} </option>
-                        {{/each}}
-                    </select>
-                    {{/if}}
-                </td>
-                <td class="align-items-center d-flex justify-content-center">
-                    <div>
-                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
-                            data-bs-target="#editModal{{this.id}}">Editar</button>
-                        <form action="/pessoas/delete/{{this.id}}" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-
+            <!-- Corpo Tabela de pessoas -->
+            {{> corpoTabelaPessoas}}
             <!-- Modal -->
-            <div class="modal fade" id="editModal{{this.id}}" tabindex="-1" aria-labelledby="editModalLabel{{this.id}}"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel{{this.id}}">Editar Pessoa</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editForm{{this.id}}">
-                                <div class="mb-3">
-                                    <label for="nome{{this.id}}" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="nome{{this.id}}" value="{{this.nome}}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="idade{{this.id}}" class="form-label">Idade</label>
-                                    <input type="number" class="form-control" id="idade{{this.id}}"
-                                        value="{{this.idade}}">
-                                </div>
-                                {{#if this.carrosDisponiveis}}
-                                <div class="mb-3 text-center">
-                                    <label for="carrosDisponiveis{{this.id}}" class="form-label">
-                                        <h5 style="margin-bottom: 0;">Selecione Carros para adicionar</h5>
-                                        <span class="small text-muted">(Segure CTRL para marcar multiplos ou
-                                            desmarcar)</span>
-                                    </label>
-                                    <select class="form-select me-2" name="carrosDisponiveis{{this.id}}" multiple
-                                        style="background-color: lightgreen;">
-                                        {{#each carrosDisponiveis}}
-                                        <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
-                                            this.fotoLink}} - Possui foto {{/if}} </option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                                {{/if}}
-                                {{#if this.carros}}
-                                <div class="mb-3 text-center">
-                                    <label for="carros{{this.id}}" class="form-label">
-                                        <h5 style="margin-bottom: 0;">Selecione Carros para remover</h5>
-                                        <span class="small text-muted">(Segure CTRL para marcar multiplos ou
-                                            desmarcar)</span>
-                                    </label>
-                                    <select class="form-select me-2" name="carros{{this.id}}" multiple
-                                        style="background-color: lightcoral;">
-                                        {{#each carros}}
-                                        <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
-                                            this.fotoLink}} - Possui foto {{/if}} </option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                                {{/if}}
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="button" class="btn btn-primary" onclick="salvarMudancas({{this.id}})">Salvar
-                                mudanças</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{> pessoasModal}}
             {{/each}}
         </tbody>
     </table>
 </div>
+{{/if}}

@@ -1,25 +1,24 @@
-const Sequelize = require('sequelize');
-const db = require('../conect/db.js');
+const { db, Seq } = require('../conect/db.js');
 
 const Carro = db.define('carros', {
     modelo: {
-        type: Sequelize.STRING,
+        type: Seq.STRING,
         allowNull: false
     },
     marca: {
-        type: Sequelize.STRING,
+        type: Seq.STRING,
         allowNull: false
     },
     ano: {
-        type: Sequelize.INTEGER,
+        type: Seq.INTEGER,
         allowNull: false
     },
     preco: {
-        type: Sequelize.FLOAT,
+        type: Seq.FLOAT,
         allowNull: false
     },
     fotoLink: {
-        type: Sequelize.STRING,
+        type: Seq.STRING,
         allowNull: true
     }
 });
