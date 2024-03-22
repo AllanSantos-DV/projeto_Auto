@@ -4,6 +4,10 @@ const criarCarro = async (carro) => {
     return await Carro.create(carro);
 };
 
+const obterCarro = async (id) => {
+    return await Carro.findByPk(id);
+};
+
 const listarCarros = async () => {
     return await Carro.findAll();
 };
@@ -14,9 +18,9 @@ const listarCarrosNaoAssociados = async () => {
     });
 };
 
-const atualizarCarro = async (req) => {
-    return await Carro.update(req.body, {
-        where: { id: req.params.id }
+const atualizarCarro = async (id, carro) => {
+    return await Carro.update(carro, {
+        where: { id }
     });
 };
 
@@ -44,6 +48,7 @@ const desassociarCarro = async (carrosIds) => {
 
 module.exports = {
     criarCarro,
+    obterCarro,
     listarCarros,
     listarCarrosNaoAssociados,
     atualizarCarro,

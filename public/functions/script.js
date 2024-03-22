@@ -64,7 +64,7 @@ function associarCarro(id, carros) {
 
 function redirecionar(select) {
     if (select === null) return;
-    const url = select.value;
+    const url = `/carros/${select.value}`;
     select.value = "/pessoas";
     window.location.href = url;
 };

@@ -9,21 +9,20 @@
             <div class="modal-body">
                 <form action="/carros/update/{{this.id}}" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="modelo-{{this.id}}" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modelo-{{this.id}}" value="{{this.modelo}}">
+                        <label for="modelo" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="modelo" name="modelo" value="{{this.modelo}}">
                     </div>
                     <div class="mb-3">
-                        <label for="marca-{{this.id}}" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marca-{{this.id}}" value="{{this.marca}}">
+                        <label for="marca" class="form-label">Marca</label>
+                        <input type="text" class="form-control" id="marca" name="marca" value="{{this.marca}}">
                     </div>
                     <div class="mb-3">
-                        <label for="ano-{{this.id}}" class="form-label
-                            ">Ano</label>
-                        <input type="number" class="form-control" id="ano-{{this.id}}" value="{{this.ano}}">
+                        <label for="ano" class="form-label">Ano</label>
+                        <input type="number" class="form-control" id="ano" name="ano" value="{{this.ano}}">
                     </div>
                     <div class="mb-3">
-                        <label for="preco-{{this.id}}" class="form-label">Preço</label>
-                        <input type="number" class="form-control" id="preco-{{this.id}}" value="{{this.preco}}">
+                        <label for="preco" class="form-label">Preço</label>
+                        <input type="number" class="form-control" id="preco" name="preco" value="{{this.preco}}">
                     </div>
                     <div class="mb-3">
                         <label for="fotoLink" class="form-label">Imagem</label>

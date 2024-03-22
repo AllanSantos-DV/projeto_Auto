@@ -1,0 +1,21 @@
+<div class="container mt-5">
+    {{#each carro}}
+    <div class="card">
+        <img src="/{{this.fotoLink}}" class="card-img-top" alt="Foto do carro">
+        <div class="card-body">
+            <h5 class="card-title">{{this.modelo}}</h5>
+            <p class="card-text">Marca: {{this.marca}}</p>
+            <p class="card-text">Ano: {{this.ano}}</p>
+            <p class="card-text">Preço: {{this.preco}}</p>
+            <div class="d-flex">
+                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                    data-bs-target="#editCarModal-{{this.id}}">Editar</button>
+                <form action="/carros/delete/{{this.id}}" method="post">
+                    <button type="submit" class="btn btn-danger">Deletar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{> carrosModal}}
+    {{/each}}
+</div>

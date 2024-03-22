@@ -15,9 +15,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Importar controladores
-const carrosController = require('../controllers/carrosController');
-
 // Importar services
 const carrosService = require('../services/carrosService');
 
@@ -30,6 +27,7 @@ const router = express.Router();
 // --- Rotas Render
 router.get('/novo', carrosService.cadastrarCarros);
 router.get('/', carrosService.listarCarros);
+router.get('/:id', carrosService.obterCarro);
 
 // --- Rotas API
 router.post('/novo', upload.single('fotoLink'), carrosService.cadastrarCarro);
