@@ -11,11 +11,21 @@ const carrosRoutes = require('./routes/carrosRoutes');
 // Criar aplicativo
 const app = express();
 
-// Configurar aplicativo
-app.engine('handlebars', exphbs.engine({
+const hbs = exphbs.create({
     defaultLayout: 'main',
-    partialsDir: path.join(__dirname, '/views/includes/')
-}));
+    partialsDir: path.join(__dirname, '/views/includes/'),
+    helpers: {
+        eq: function(a, b) {
+            return a === b;
+        },
+        contains: function(array, value) {
+            let result = array.some(item => item.nome.toLowerCase().includes(value.toLowerCase()));
+            return result;
+        }
+    }
+});
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Configuração da sessão

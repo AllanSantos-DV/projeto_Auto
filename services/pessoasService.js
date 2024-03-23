@@ -45,7 +45,6 @@ const atualizarPessoa = async (req, res) => {
         nome: req.body.nome,
         idade: req.body.idade,
     };
-    console.log(req.body);
     await atualizarCarroDaPessoa(id, req);
     await tryCatchWrapper(async () => {
         await pessoasController.atualizarPessoa(id, pessoa);
