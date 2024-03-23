@@ -33,7 +33,5 @@ router.get('/:id', carrosService.obterCarro);
 router.post('/novo', upload.single('fotoLink'), carrosService.cadastrarCarro);
 router.post('/update/:id', upload.single('fotoLink'), carrosService.atualizarCarro);
 router.post('/delete/:id', carrosService.deletarCarro);
-router.post('/associarCarro/:id', carrosService.associarCarro);
-router.post('/dessasociarCarro/:id', carrosService.desassociarCarro);
 
 module.exports = router;

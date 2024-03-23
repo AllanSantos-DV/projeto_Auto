@@ -1,5 +1,6 @@
 const pessoasController = require('../controllers/pessoasController');
 const carrosController = require('../controllers/carrosController');
+const tryCatchWrapper = require('./tryCatch');
 
 const carrosDisponiveisJson = async () => {
     carros = await carrosController.listarCarrosNaoAssociados();
@@ -8,7 +9,7 @@ const carrosDisponiveisJson = async () => {
 
 //renderiza a página de cadastro de pessoas e listagem de pessoas
 const cadastrarPessoas = async (req, res) => {
-    res.render('newPessoa', { title: ' - Cadastrar Pessoa', carros : await carrosDisponiveisJson()});
+    res.render('newPessoa', { title: ' - Cadastrar Pessoa', carros: await carrosDisponiveisJson() });
 };
 
 const listarPessoas = async (req, res) => {
@@ -18,34 +19,62 @@ const listarPessoas = async (req, res) => {
         pessoaJson.carrosDisponiveis = await carrosDisponiveisJson();
         return pessoaJson;
     }));
-    res.render('index', { title: ' - Listar Pessoas', pessoas: pessoasJson});
+    res.render('index', { title: ' - Listar Pessoas', pessoas: pessoasJson });
 };
 
 // services para API
 const cadastrarPessoa = async (req, res) => {
-    const pessoa = {
-        nome: req.body.nome,
-        idade: req.body.idade,
-    };
-    const novaPessoa = await pessoasController.criarPessoa(pessoa);
-    
-    if (req.body.carros) {
-        novaPessoa.setCarros(req.body.carros);
-    }
+    const pessoa = req.body;
+    await tryCatchWrapper(async () => {
+        await pessoasController.criarPessoa(pessoa).then(pessoaCriada => {
+            if (req.body.carros) {
+                pessoaCriada.setCarros(req.body.carros);
+            }
+        });
+    },
+        'Pessoa cadastrada com sucesso',
+        'Erro ao cadastrar pessoa',
+        req
+    );
     res.redirect('/pessoas');
 };
 
 const atualizarPessoa = async (req, res) => {
-    const dataAtualizada = {
+    const id = req.params.id;
+    const pessoa = {
         nome: req.body.nome,
         idade: req.body.idade,
-        carros: req.body.carros
     };
-    return pessoasController.atualizarPessoa({ params: { id: req.params.id }, body: dataAtualizada }).then(() => res.redirect('/pessoas'));
+    console.log(req.body);
+    await atualizarCarroDaPessoa(id, req);
+    await tryCatchWrapper(async () => {
+        await pessoasController.atualizarPessoa(id, pessoa);
+    },
+        'Pessoa atualizada com sucesso',
+        'Erro ao atualizar pessoa',
+        req
+    );
+    res.redirect('/pessoas');
+}
+
+const atualizarCarroDaPessoa = async (id, req) => {
+    if (req.body.carrosDisponiveis) {
+        await pessoasController.obterPessoa(id).then(pessoa => pessoa.addCarros(req.body.carrosDisponiveis));
+    }
+    if (req.body.carros) {
+        await pessoasController.obterPessoa(id).then(pessoa => pessoa.removeCarros(req.body.carros));
+    }
 };
 
 const deletarPessoa = async (req, res) => {
-    return pessoasController.deletarPessoa(req.params.id).then(() => res.redirect('/pessoas'));
+    await tryCatchWrapper(async () => {
+        await pessoasController.deletarPessoa(req.params.id);
+    },
+        'Pessoa deletada com sucesso',
+        'Erro ao deletar pessoa',
+        req
+    );
+    res.redirect('/pessoas');
 };
 
 module.exports = {

@@ -1,5 +1,6 @@
-const fs = require('fs');
 const carrosController = require('../controllers/carrosController');
+const tryCatchWrapper = require('./tryCatch');
+const fs = require('fs');
 
 // renderiza a página de cadastro de carros e listagem de carros
 const cadastrarCarros = async (req, res) => {
@@ -19,21 +20,25 @@ const obterCarro = async (req, res) => {
 };
 
 // Deleta imagem do carro
-
 const deletarImagem = async (id) => {
     const file = await carrosController.obterCarro(id).then(carro => carro.fotoLink);
     if(file) {
         fs.unlinkSync(`public/${file}`);
     }
-}
+};
 
 // services para API
 const cadastrarCarro = async (req, res) => {
     const carro = req.body;
-    if(req.file) {
-        carro.fotoLink = req.file.path.replace('public\\', '');
-    }
-    return carrosController.criarCarro(carro).then(() => res.redirect('/carros'));
+    if(req.file) carro.fotoLink = req.file.path.replace('public\\', '');
+    tryCatchWrapper(async () => {
+        await carrosController.criarCarro(carro);
+    },
+        'Carro cadastrado com sucesso',
+        'Erro ao cadastrar carro',
+        req
+    );
+    res.redirect('/carros');
 };
 
 const atualizarCarro = async (req, res) => {
@@ -43,23 +48,26 @@ const atualizarCarro = async (req, res) => {
         await deletarImagem(id);
         carroAtual.fotoLink = req.file.path.replace('public\\', '');
     }
-    return carrosController.atualizarCarro(id, carroAtual).then(() => res.redirect('/carros'));
+    tryCatchWrapper(async () => {
+        await carrosController.atualizarCarro(id, carroAtual);
+    },
+        'Carro atualizado com sucesso',
+        'Erro ao atualizar carro',
+        req
+    );
+    res.redirect('/carros');
 };
 
 const deletarCarro = async (req, res) => {
     await deletarImagem(req.params.id);
-    return carrosController.deletarCarro(req.params.id).then(() => res.redirect('/carros'));
-};
-
-const associarCarro = async (req, res) => {
-    const pessoaId = req.params.id;
-    const carrosIds = req.body.carros;
-    return carrosController.associarCarro(pessoaId, carrosIds).then(() => res.redirect('/pessoas'));
-};
-
-const desassociarCarro = async (req, res) => {
-    const carrosIds = req.body.carros;
-    return carrosController.desassociarCarro(carrosIds).then(() => res.redirect('/pessoas'));
+    tryCatchWrapper(async () => {
+        await carrosController.deletarCarro(req.params.id);
+    },
+        'Carro deletado com sucesso',
+        'Erro ao deletar carro',
+        req
+    );
+    res.redirect('/carros');
 };
 
 module.exports = {
@@ -68,7 +76,5 @@ module.exports = {
     obterCarro,
     cadastrarCarro,
     atualizarCarro,
-    deletarCarro,
-    associarCarro,
-    desassociarCarro
+    deletarCarro
 }

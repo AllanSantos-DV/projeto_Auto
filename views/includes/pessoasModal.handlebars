@@ -7,23 +7,24 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editForm{{this.id}}">
+                <form id="editForm{{this.id}}" action="/pessoas/update/{{this.id}}" method="post">
                     <div class="mb-3">
                         <label for="nome{{this.id}}" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome{{this.id}}" value="{{this.nome}}">
+                        <input type="text" class="form-control" id="nome{{this.id}}" name="nome" value="{{this.nome}}">
                     </div>
                     <div class="mb-3">
                         <label for="idade{{this.id}}" class="form-label">Idade</label>
-                        <input type="number" class="form-control" id="idade{{this.id}}" value="{{this.idade}}">
+                        <input type="number" class="form-control" id="idade{{this.id}}" name="idade"
+                            value="{{this.idade}}">
                     </div>
                     {{#if this.carrosDisponiveis}}
                     <div class="mb-3 text-center">
-                        <label for="carrosDisponiveis{{this.id}}" class="form-label">
+                        <label for="carrosDisponiveis" class="form-label">
                             <h5 style="margin-bottom: 0;">Selecione Carros para adicionar</h5>
                             <span class="small text-muted">(Segure CTRL para marcar multiplos ou
                                 desmarcar)</span>
                         </label>
-                        <select class="form-select me-2" name="carrosDisponiveis{{this.id}}" multiple
+                        <select class="form-select me-2" name="carrosDisponiveis" multiple
                             style="background-color: lightgreen;">
                             {{#each carrosDisponiveis}}
                             <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
@@ -34,13 +35,12 @@
                     {{/if}}
                     {{#if this.carros}}
                     <div class="mb-3 text-center">
-                        <label for="carros{{this.id}}" class="form-label">
+                        <label for="carros" class="form-label">
                             <h5 style="margin-bottom: 0;">Selecione Carros para remover</h5>
                             <span class="small text-muted">(Segure CTRL para marcar multiplos ou
                                 desmarcar)</span>
                         </label>
-                        <select class="form-select me-2" name="carros{{this.id}}" multiple
-                            style="background-color: lightcoral;">
+                        <select class="form-select me-2" name="carros" multiple style="background-color: lightcoral;">
                             {{#each carros}}
                             <option value="{{this.id}}"> {{this.modelo}} - {{this.marca}} {{#if
                                 this.fotoLink}} - Possui foto {{/if}} </option>
@@ -48,13 +48,11 @@
                         </select>
                     </div>
                     {{/if}}
-
+                    <div class="d-flex justify-content-between modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" onclick="salvarMudancas({{this.id}})">Salvar
-                    mudanças</button>
             </div>
         </div>
     </div>
