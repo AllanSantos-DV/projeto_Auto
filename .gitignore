@@ -1,4 +1,5 @@
-node_modules
 .env
-public/imagens/carro/*
 /.idea/
+/node_modules/
+/public/imagens/carro/*
+
