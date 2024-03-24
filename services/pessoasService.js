@@ -3,7 +3,7 @@ const carrosController = require('../controllers/carrosController');
 const tryCatchWrapper = require('./tryCatch');
 
 const carrosDisponiveisJson = async () => {
-    carros = await carrosController.listarCarrosNaoAssociados();
+    let carros = await carrosController.listarCarrosNaoAssociados();
     return carros.map(carro => carro.toJSON());
 };
 

@@ -31,9 +31,9 @@ const deletarImagem = async (id) => {
 const cadastrarCarro = async (req, res) => {
     const carro = req.body;
     if(req.file) carro.fotoLink = req.file.path.replace('public\\', '');
-    tryCatchWrapper(async () => {
-        await carrosController.criarCarro(carro);
-    },
+    await tryCatchWrapper(async () => {
+            await carrosController.criarCarro(carro);
+        },
         'Carro cadastrado com sucesso',
         'Erro ao cadastrar carro',
         req
@@ -48,9 +48,9 @@ const atualizarCarro = async (req, res) => {
         await deletarImagem(id);
         carroAtual.fotoLink = req.file.path.replace('public\\', '');
     }
-    tryCatchWrapper(async () => {
-        await carrosController.atualizarCarro(id, carroAtual);
-    },
+    await tryCatchWrapper(async () => {
+            await carrosController.atualizarCarro(id, carroAtual);
+        },
         'Carro atualizado com sucesso',
         'Erro ao atualizar carro',
         req
@@ -60,9 +60,9 @@ const atualizarCarro = async (req, res) => {
 
 const deletarCarro = async (req, res) => {
     await deletarImagem(req.params.id);
-    tryCatchWrapper(async () => {
-        await carrosController.deletarCarro(req.params.id);
-    },
+    await tryCatchWrapper(async () => {
+            await carrosController.deletarCarro(req.params.id);
+        },
         'Carro deletado com sucesso',
         'Erro ao deletar carro',
         req

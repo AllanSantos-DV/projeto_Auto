@@ -2,10 +2,18 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const uuid = require('uuid');
+const fs = require('fs');
+
+const dir = './public/imagens/carros';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+}
+
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, './public/imagens/carro/');
+        cb(null, dir);
     },
     filename: function(req, file, cb) {
         let ext = path.extname(file.originalname);
