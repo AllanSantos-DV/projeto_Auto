@@ -6,7 +6,6 @@ const PORT = process.env.PORT || 3000;
 // Inicializa o banco de dados e o servidor HTTP
 initDb().then(() => {
     app.listen(PORT, () => {
-        console.log(`Servidor rodando na porta ${PORT}`);
         console.log(`http://localhost:${PORT}/pessoas`);
     });
 }).catch(error => {
