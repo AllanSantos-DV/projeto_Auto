@@ -5,21 +5,26 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 // Importar rotas
-const pessoasRoutes = require('./routes/pessoasRoutes');
-const carrosRoutes = require('./routes/carrosRoutes');
+const pessoasRoutes = require('../routes/pessoasRoutes');
+const carrosRoutes = require('../routes/carrosRoutes');
+
+//função para remover acentos
+function removerAcentos(s) {
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+}
 
 // Criar aplicativo
 const app = express();
 
 const hbs = exphbs.create({
     defaultLayout: 'main',
-    partialsDir: path.join(__dirname, '/views/includes/'),
+    partialsDir: path.join(__dirname, '../views/includes/'),
     helpers: {
         eq: function(a, b) {
             return a === b;
         },
         contains: function(array, value) {
-            let result = array.some(item => item.nome.toLowerCase().includes(value.toLowerCase()));
+            let result = array.some(item => removerAcentos(item.nome).toLowerCase().includes(value.toLowerCase()));
             return result;
         }
     }

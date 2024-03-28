@@ -7,7 +7,6 @@ const carrosDisponiveisJson = async () => {
     return carros.map(carro => carro.toJSON());
 };
 
-//renderiza a página de cadastro de pessoas e listagem de pessoas
 const cadastrarPessoas = async (req, res) => {
     res.render('newPessoa', { title: ' - Cadastrar Pessoa', carros: await carrosDisponiveisJson() });
 };
@@ -22,7 +21,6 @@ const listarPessoas = async (req, res) => {
     res.render('index', { title: ' - Listar Pessoas', pessoas: pessoasJson });
 };
 
-// services para API
 const cadastrarPessoa = async (req, res) => {
     const pessoa = req.body;
     await tryCatchWrapper(async () => {

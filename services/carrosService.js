@@ -2,7 +2,6 @@ const carrosController = require('../controllers/carrosController');
 const tryCatchWrapper = require('./tryCatch');
 const fs = require('fs');
 
-// renderiza a página de cadastro de carros e listagem de carros
 const cadastrarCarros = async (req, res) => {
     res.render('newCarro', { title: ' - Cadastrar Carro' });
 };
@@ -19,7 +18,6 @@ const obterCarro = async (req, res) => {
     res.render('carro', { title: ' - Detalhes do Carro', carro: [carroJson]});
 };
 
-// Deleta imagem do carro
 const deletarImagem = async (id) => {
     const file = await carrosController.obterCarro(id).then(carro => carro.fotoLink);
     if(file) {
@@ -27,7 +25,6 @@ const deletarImagem = async (id) => {
     }
 };
 
-// services para API
 const cadastrarCarro = async (req, res) => {
     const carro = req.body;
     if(req.file) carro.fotoLink = req.file.path.replace('public\\', '');

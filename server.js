@@ -1,5 +1,5 @@
-const app = require('./app');
-const initDb = require('./init');
+const app = require('./configs/app');
+const initDb = require('./configs/init');
 
 const PORT = process.env.PORT || 3000;
 
