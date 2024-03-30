@@ -43,7 +43,7 @@ const atualizarPessoa = async (req, res) => {
         nome: req.body.nome,
         idade: req.body.idade,
     };
-    await atualizarCarroDaPessoa(id, req);
+    let mensagemCarros = await atualizarCarroDaPessoa(id, req);
     await tryCatchWrapper(async () => {
         await pessoasController.atualizarPessoa(id, pessoa);
     },
@@ -51,16 +51,27 @@ const atualizarPessoa = async (req, res) => {
         'Erro ao atualizar pessoa',
         req
     );
+    req.flash('success', mensagemCarros);
     res.redirect('/pessoas');
 }
 
 const atualizarCarroDaPessoa = async (id, req) => {
-    if (req.body.carrosDisponiveis) {
-        await pessoasController.obterPessoa(id).then(pessoa => pessoa.addCarros(req.body.carrosDisponiveis));
-    }
-    if (req.body.carros) {
-        await pessoasController.obterPessoa(id).then(pessoa => pessoa.removeCarros(req.body.carros));
-    }
+    let mensagem = '';
+    await tryCatchWrapper(async () => {
+        if (req.body.carrosDisponiveis) {
+            await pessoasController.obterPessoa(id).then(pessoa => pessoa.addCarros(req.body.carrosDisponiveis));
+            mensagem = ' Carro(s) adicionado(s) com sucesso';
+        }
+        if (req.body.carros) {
+            await pessoasController.obterPessoa(id).then(pessoa => pessoa.removeCarros(req.body.carros));
+            mensagem = mensagem === '' ? ' Carro(s) removido(s) com sucesso' : ' Carro(s) adicionado(s) e removido(s) com sucesso';
+        }
+    },
+        mensagem,
+        'Erro ao atualizar carros da pessoa',
+        req
+    );
+    return mensagem;
 };
 
 const deletarPessoa = async (req, res) => {

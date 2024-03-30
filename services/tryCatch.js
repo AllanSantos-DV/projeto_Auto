@@ -1,6 +1,8 @@
-async function tryCatchWrapper(fn, successMessage, errorMessage, req) {
+async function tryCatchWrapper(fnOrConst, successMessage, errorMessage, req) {
     try {
-        await fn();
+        if (typeof fnOrConst === 'function') {
+            await fnOrConst();
+        }
         req.flash('success', successMessage);
     } catch (error) {
         req.flash('error', errorMessage);

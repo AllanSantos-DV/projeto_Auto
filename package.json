@@ -4,7 +4,7 @@
   "description": "Este é um aplicativo inovador que permite aos usuários cadastrar tanto carros quanto pessoas. Uma característica única deste aplicativo é a capacidade de interligar carros e pessoas, proporcionando uma experiência de usuário integrada e eficiente. Seja você um entusiasta de carros procurando gerenciar sua coleção ou uma empresa procurando rastrear a alocação de veículos, este aplicativo tem algo para todos.",
   "main": "server.js",
   "scripts": {
-    "start": "npm install && node server.js"
+    "start": "node server.js"
   },
   "keywords": [ "Future", "futuros", "compartilhamento", "descoberta", "visões", "criação", "visualização", "Node.js", "aplicativo" ],
   "author": "Reinaldo, Allan",

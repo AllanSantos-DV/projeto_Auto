@@ -5,11 +5,11 @@ const criarCarro = async (carro) => {
 };
 
 const obterCarro = async (id) => {
-    return await Carro.findByPk(id);
+    return await Carro.findByPk(id, { include: ['pessoa'] });
 };
 
 const listarCarros = async () => {
-    return await Carro.findAll();
+    return await Carro.findAll({ include: ['pessoa'] });
 };
 
 const listarCarrosNaoAssociados = async () => {
